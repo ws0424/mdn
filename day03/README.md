@@ -15,6 +15,42 @@
 
 ##### 函数属性
 
+> 全局函数可以直接调用，不需要在调用时指定所属对象，执行结束后会将结果返回给调用者
+
+- eval 全局对象的一个属性，参数是`string`格式，一个表示 javascript 表达式，语句或一系列语句的字符串，表达式可以包含于以存在的对象属性，返回值返回字符串代码中的返回值，如果返回值为空那么就返回 undefined，如果 eavl 的参数不是字符串则会将参数原封不动的返回，如果不是直接使用 eavl 而是间接性调用 eavl 的作用域则是在全局作用域下，永远不要使用 eavl，因为 eavl 是一个危险函数，我们可以使用`window.Funcrion`来代替 eavl，eval 访问对象成员，不建议用 eavl 访问对象成员因为可以有更好的办法代替他比如`a[b]`而不是`eavl('a.'+ b)`,
+  返回值返回最后一个表达式的值,eavl 中定义函数要与`“(“和”)”`定义前缀和后缀，否则返回 undeifned
+
+```js
+// 使用eval的糟糕代码:
+function looseJsonParse(obj) {
+  return eval("(" + obj + ")");
+}
+console.log(looseJsonParse("{a:(4-1), b:function(){}, c:new Date()}"));
+// 不用eval的更好的代码:
+function looseJsonParse(obj) {
+  return Function('"use strict";return (' + obj + ")")();
+}
+console.log(looseJsonParse("{a:(4-1), b:function(){}, c:new Date()}"));
+```
+
+- uneavl 顶级函数并且不与任何对象相关联（非标准）,参数是一个对象或者表达式`object`返回对象或者表达式的源码
+
+```js
+var a = 1;
+uneval(a); // returns a String containing 1
+
+var b = "1";
+uneval(b); // returns a String containing "1"
+
+uneval(function foo() {}); // returns "(function foo(){})"
+
+var a = uneval(function foo() {
+  return "hi";
+});
+var foo = eval(a);
+foo(); // returns "hi"
+```
+
 ##### 基本对象
 
 ##### 数字和日期
