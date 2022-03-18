@@ -23,4 +23,26 @@
 // const a = 11;
 // const b = 22;
 // console.log(looseJsonParse("a+b"));
-console.log(Function('"use strict";return(function(a){return a(5)})')());
+// console.log(Function('"use strict";return(function(a){return a(5)})')());
+
+// console.log(isFinite("aa"));
+// console.log(isNaN("111"));
+// console.log(Number.isNaN("111"));
+// console.log(isNaN(true));
+// console.log(Number.isNaN(true));
+
+// console.log(isNaN("aa"));
+// console.log(Number.isNaN("aa"));
+parseFloat(3.14);
+parseFloat("3.14");
+parseFloat("  3.14  ");
+parseFloat("314e-2");
+parseFloat("0.0314E+2");
+parseFloat("3.14some non-digit characters");
+console.log(
+  parseFloat({
+    toString: function () {
+      return "3.14";
+    },
+  })
+);

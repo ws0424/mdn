@@ -51,6 +51,30 @@ var foo = eval(a);
 foo(); // returns "hi"
 ```
 
+- isFinite 全局函数，判读一个值是否为有限数字，在必要时会将其先转成数值，`NaN`，`+infinity`,`-infinitty` 都会返回 false，否则会返回 true
+- isNaN 全局函数，给定值为 NaN 则返回 true 否则返回 false，NaN 的必要性，`NaN == NaN` `NaN === NaN`返回 false,这就证明了`isNaN`的重要性，但是 isNaN 的会转成数值，如果使用 Number.isNaN 则不会转换
+
+```js
+console.log(isNaN("aa")); >> true
+console.log(Number.isNaN("aa")); >> false
+```
+
+- parseFloat 全局函数，不属于任何对象，传入一个字符串，解析成浮点数，传入 bigInt 会丢失精度，会返回 NaN，Infinity，也可以转换已经定义 toSting，valueOf 的对象
+
+```js
+parseFloat(3.14);
+parseFloat("3.14");
+parseFloat("  3.14  ");
+parseFloat("314e-2");
+parseFloat("0.0314E+2");
+parseFloat("3.14some non-digit characters");
+parseFloat({
+  toString: function () {
+    return "3.14";
+  },
+});
+```
+
 ##### 基本对象
 
 ##### 数字和日期
