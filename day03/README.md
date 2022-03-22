@@ -75,7 +75,57 @@ parseFloat({
 });
 ```
 
+- parseInt 全局函数，第一个参数为字符串，第二个参数为`radix`(2-36)进制，返回一个整数或`NaN`,在一些字符中带有`e`字符使用 parseInt 会产生意外的结果，parsetInt 不应该代替`Math.floor`,parseInt 会认识两个字符`+ -`,bigInt 会丢失精度
+- decodeURI 全局函数，将以编码的 URI 中所有能识别的转义符转成原字符，但不能解码不会被编码的字符如`#`，当 encodeURI 包含无效字符时会报错`URIError`
+
+```js
+decodeURI(
+  "https://developer.mozilla.org/ru/docs/JavaScript_%D1%88%D0%B5%D0%BB%D0%BB%D1%8B"
+);
+// "https://developer.mozilla.org/ru/docs/JavaScript_шеллы"
+
+try {
+  var a = decodeURI("%E0%A4%A");
+} catch (e) {
+  console.error(e);
+}
+
+// URIError: malformed URI sequence
+```
+
+- decodeURIComponent,全局函数，将以编码的 URI 中所能识别的字符转换成原字符
+- encodeURI，全局函数,替换那些无需保留的并且 URI 中有特殊意思的字符进行编码
+- encodeURIComponent，全局函数，转义除了`A-Z a-z 0-9 - _ . ! ~ * ' ( )`的所有字符，参数`uriComponent`在编码之前都会被转成字符串
+
+  - encodeURIComponent() 和 encodeURI 有以下几个不同点：
+
+  ```js
+  var set1 = ";,/?:@&=+$"; // 保留字符
+  var set2 = "-_.!~*'()"; // 不转义字符
+  var set3 = "#"; // 数字标志
+  var set4 = "ABC abc 123"; // 字母数字字符和空格
+  ```
+
+  ```js
+  console.log(encodeURI(set1)); // ;,/?:@&=+$
+  console.log(encodeURI(set2)); // -\_.!~\*'()
+  console.log(encodeURI(set3)); // #
+  console.log(encodeURI(set4)); // ABC%20abc%20123 (空格被编码为 %20)
+
+  console.log(encodeURIComponent(set1)); // %3B%2C%2F%3F%3A%40%26%3D%2B%24
+  console.log(encodeURIComponent(set2)); // -\_.!~\*'()
+  console.log(encodeURIComponent(set3)); // %23
+  console.log(encodeURIComponent(set4)); // ABC%20abc%20123 (the space gets encoded as %20)
+  ```
+
 ##### 基本对象
+
+> 基本对象是定义或者使用其他对象的基础
+
+- Object,是 javascript 的一种数据类型，用于存储简值集合和更复杂的实体，`objects`可以通过`object（）`构造函数或者使用对象字面量的方式创建,在 javascript 中几乎所有对象都是 object 类型的实例，他们都会从`object.prototype`上继承属性和方法，虽然大部分属性被重写或者覆盖，`object`还可以故意的被创建使其不是一个真正的对象`Object.create(null)`,或者通过一些手段改变对象，使其不是真正的对象`Object.setPrototypeof`，Object 构造函数为给定参数创建一个包装类对象，如果给定的值是`null`或者`undefined`则会返回空对象`{}`,如果传进去的是一个基本类型的值，则会转换成包装对象返回，如果传进去的是引用类型的值，则会返回这个值，与传递的值相同引用
+  - 注意：当以非构造函数调用时与构造函数一致 `Object（）`等同于 `new Object（）`
+  - 从一个对象上删除一个属性 `Object`上没有提供删除属性的方法必须使用`delete操作符`，Map 中的`Map.prototype.delete()`可以删除自身属性
+- Function 每个 javascript 函数都是一个 Function 对象，`(function(){}).constructor === Function`,Function 可以用此动态创建函数，但是会遇到和`eavl()`类似的安全性问题，和较小的性能问题，而和 eavl 不同的是 Function 构造函数只能在全局作用域中运行
 
 ##### 数字和日期
 
@@ -96,3 +146,7 @@ parseFloat({
 ##### WebAssembly
 
 ##### 其他
+
+```
+
+```

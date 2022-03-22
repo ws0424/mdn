@@ -33,16 +33,65 @@
 
 // console.log(isNaN("aa"));
 // console.log(Number.isNaN("aa"));
-parseFloat(3.14);
-parseFloat("3.14");
-parseFloat("  3.14  ");
-parseFloat("314e-2");
-parseFloat("0.0314E+2");
-parseFloat("3.14some non-digit characters");
-console.log(
-  parseFloat({
-    toString: function () {
-      return "3.14";
-    },
-  })
-);
+// parseFloat(3.14);
+// parseFloat("3.14");
+// parseFloat("  3.14  ");
+// parseFloat("314e-2");
+// parseFloat("0.0314E+2");
+// parseFloat("3.14some non-digit characters");
+// console.log(
+//   parseFloat({
+//     toString: function () {
+//       return "3.14";
+//     },
+//   })
+// );
+
+// console.log(
+//   encodeURI(
+//     `https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/encodeURI?a=b&c=d]`
+//   )
+// );
+
+// function Person() {}
+// // Person.prototype = Object.create(null);
+// Person.prototype.add = function () {
+//   console.log("add");
+// };
+
+// const p = new Person();
+// console.log(p.__proto__.__proto__.__proto__);
+
+// const obj = {
+//   name: "zhangsan",
+// };
+
+// const o = Object(obj);
+// o.name = "lisi";
+// console.log(obj, o);
+
+// const obj1 = {name: "zhangsan1"};
+// const obj2 = {age: "18"};
+// const assign = Object.assign(obj1, obj2);
+// console.log(obj1, obj2, assign);
+// console.log(obj1 === assign);
+
+var x = 10;
+
+function createFunction1() {
+  var x = 20;
+  return new Function("return x;"); // 这里的 x 指向最上面全局作用域内的 x
+}
+
+function createFunction2() {
+  var x = 20;
+  function f() {
+    return x; // 这里的 x 指向上方本地作用域内的 x
+  }
+  return f;
+}
+
+var f1 = createFunction1();
+console.log(f1()); // 10
+var f2 = createFunction2();
+console.log(f2()); // 20
